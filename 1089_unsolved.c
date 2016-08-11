@@ -1,8 +1,7 @@
 #include <stdio.h>
 
-long intervals[50000][2] = { { 0 } };
-int max(int int1, int int2, int int3);
-void quicksort(long arr[][2], int begin, int end);
+int intervals[50000][2] = { { 0 } };
+void quicksort(int arr[][2], int begin, int end);
 
 int main(int argc, char* argv[]) {
 	int n = 0;
@@ -11,7 +10,7 @@ int main(int argc, char* argv[]) {
 	//Input all the initial intervals
 	int i = 0;
 	for (i = 0; i < n; i++) {
-		scanf("%ld %ld", &intervals[i][0], &intervals[i][1]);
+		scanf("%d %d", &intervals[i][0], &intervals[i][1]);
 	}
 
 	//Sort
@@ -26,25 +25,22 @@ int main(int argc, char* argv[]) {
 			continue;
 		}
 		else if (current[1] < intervals[i][0]) {
-			printf("%ld %ld\n", current[0], current[1]);
+			printf("%d %d\n", current[0], current[1]);
 			current[0] = intervals[i][0];
 			current[1] = intervals[i][1];
 		}
 		else {
-			current[1] = max(current[1], intervals[i][0], intervals[i][1]);
+			if (current[1] < intervals[i][1]) {
+				current[1] = intervals[i][1];
+			}
 		}
 	}
-	printf("%ld %ld\n", current[0], current[1]);
+	printf("%d %d\n", current[0], current[1]);
 
 	return 0;
 }
 
-int max(int int1, int int2, int int3) {
-	int temp1 = (int1 > int2) ? int1 : int2;
-	return (temp1 > int3) ? temp1 : int3;
-}
-
-void quicksort(long arr[][2], int begin, int end) {
+void quicksort(int arr[][2], int begin, int end) {
 	//Set the pivot
 	int pivot = arr[end][0];
 
